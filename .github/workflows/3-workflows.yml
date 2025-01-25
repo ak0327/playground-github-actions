@@ -1,4 +1,5 @@
 name: 3 Workflow
+run-name: Run by @${{ github.actor }} # ワークフロー実行名の指定
 on: push
 jobs:
   print-actor:
@@ -41,3 +42,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "hello, ${{ github.actor }}"
+
+  naming:
+    name: Job Name
+    runs-on: ubuntu-latest
+    steps:
+      - name: Steps Name
+        run: echo "hello"

@@ -1,0 +1,13 @@
+name: 4 CI
+on:
+  pull_request:                         # PRの作成で起動
+    paths: ['go/**/*.go']               # goファイルの変更をトリガーとする
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4       # step1: checkout
+      - uses: actions/setup-go@v5       # step2: set up go
+        with:
+          go-version: '1.22'
+      - run: go test go/excellent/*.go  # step3: run test

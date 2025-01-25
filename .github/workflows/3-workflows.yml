@@ -1,6 +1,28 @@
-name: Status check functions
+name: 3 Workflow
 on: push
 jobs:
+  print-actor:
+    runs-on: ubuntu-latest
+    env:
+      ACTOR: ${{ github.actor }}
+    steps:
+      - run: echo "${ACTOR}"
+
+  print-var:
+    runs-on: ubuntu-latest
+    env:
+      HOGE: ${{ vars.TEST_VAR }}
+    steps:
+      - run: echo "${HOGE}"
+
+  secret-var:
+    runs-on: ubuntu-latest
+    env:
+      PASSWORD: ${{ secrets.PASSWORD }}
+    steps:
+      - run: echo "${PASSWORD}"
+      - run: echo "${PASSWORD:0:1} ${PASSWORD#?}"
+
   fail-with-failure:
     runs-on: ubuntu-latest
     steps:
@@ -8,7 +30,7 @@ jobs:
       - run: echo "hello"
         if : ${{ failure() }}   # エラー発生するがfailure関数により実行される
 
-  fail-with-out-faulure:
+  fail-with-out-failure:
     runs-on: ubuntu-latest
     steps:
       - run: exit 1             # error発生

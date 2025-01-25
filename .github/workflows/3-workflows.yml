@@ -1,0 +1,61 @@
+name: 3 Workflow
+#run-name: Run by @${{ github.actor }} # ワークフロー実行名の指定
+on: push
+jobs:
+  print-actor:
+    runs-on: ubuntu-latest
+    env:
+      ACTOR: ${{ github.actor }}
+    steps:
+      - run: echo "${ACTOR}"
+
+  print-var:
+    runs-on: ubuntu-latest
+    env:
+      HOGE: ${{ vars.TEST_VAR }}
+    steps:
+      - run: echo "${HOGE}"
+
+  secret-var:
+    runs-on: ubuntu-latest
+    env:
+      PASSWORD: ${{ secrets.PASSWORD }}
+    steps:
+      - run: echo "${PASSWORD}"
+      - run: echo "${PASSWORD:0:1} ${PASSWORD#?}"
+
+#  fail-with-failure:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - run: exit 1             # error発生
+#      - run: echo "hello"
+#        if : ${{ failure() }}   # エラー発生するがfailure関数により実行される
+#
+#  fail-with-out-failure:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - run: exit 1             # error発生
+#      - run: echo "hello"
+
+  skip-or-run:
+    if: ${{ github.actor == 'ak0327' }}  # 指定アカウントのみ実行
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "hello, ${{ github.actor }}"
+
+  naming:
+    name: Job Name
+    runs-on: ubuntu-latest
+    steps:
+      - name: Steps Name
+        run: echo "hello"
+
+  share-output:
+    name: Share Output
+    runs-on: ubuntu-latest
+    steps:
+      - id: source                                      # step idを設定
+        run: echo "result=Hello" >> "${GITHUB_OUTPUT}"  # GITHUB_OUTPUTへ書き出し
+      - env:
+          RESULT: ${{ steps.source.outputs.result }}    # stepsコンテキストから参照
+        run: echo "${RESULT}"

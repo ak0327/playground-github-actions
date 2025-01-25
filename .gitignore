@@ -2,3 +2,10 @@
 
 !.gitignore
 !README.md
+
+!.github
+!.github/**
+
+!go
+!go/excellent
+!go/excellent/*.go

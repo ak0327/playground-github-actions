@@ -1,0 +1,15 @@
+name: Status check functions
+on: push
+jobs:
+  fail-with-failure:
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 1             # error発生
+      - run: echo "hello"
+        if : ${{ failure() }}   # エラー発生するがfailure関数により実行される
+
+  fail-with-out-faulure:
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 1             # error発生
+      - run: echo "hello"

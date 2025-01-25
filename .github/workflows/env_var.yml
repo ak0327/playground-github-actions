@@ -1,4 +1,4 @@
-name: code3.4-Intermediate environment variables
+name: Environment variables
 on: push
 jobs:
   print:
@@ -14,3 +14,11 @@ jobs:
       HOGE: ${{ vars.TEST_VAR }}
     steps:
       - run: echo "${HOGE}"
+
+  secret:
+    runs-on: ubuntu-latest
+    env:
+      PASSWORD: ${{ secrets.PASSWORD }}
+    steps:
+      - run: echo "${PASSWORD}"
+      - run: echo "${PASSWORD:0:1} ${PASSWORD#?}"

@@ -13,3 +13,9 @@ jobs:
     steps:
       - run: exit 1             # error発生
       - run: echo "hello"
+
+  skip-or-run:
+    if: ${{ github.actor == 'ak0327' }}  # 指定アカウントのみ実行
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "hello, ${{ github.actor }}"

@@ -1,12 +1,12 @@
-name: Environment variables
+name: code3.3-Override environment variables
 on: push
+env:
+  EXAMPLE: Defined by workflow level  # 環境変数を定義
 jobs:
   run:
     runs-on: ubuntu-latest
-    env:
-      BRANCH: main
     steps:
-      - run: echo "${BRANCH}"
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ env.BRANCH }}
+      - run: echo "${EXAMPLE}"
+      - env:
+          EXAMPLE: Defined by step level  # オーバーライド
+        run: echo "${EXAMPLE}"

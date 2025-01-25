@@ -7,3 +7,10 @@ jobs:
       ACTOR: ${{ github.actor }}
     steps:
       - run: echo "${ACTOR}"
+
+  print-var:
+    runs-on: ubuntu-latest
+    env:
+      HOGE: ${{ vars.TEST_VAR }}
+    steps:
+      - run: echo "${HOGE}"
